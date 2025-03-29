@@ -27,10 +27,7 @@ class ProductController extends Controller {
 
     // Crear un nuevo producto
     public function addProduct($data) {
-        // Validar que se recibieron los datos necesarios
-        if (!isset($data['name']) || !isset($data['price'])) {
-            return ['status' => 'error', 'message' => 'Faltan datos obligatorios'];
-        }
+     
         // Crear instancia del modelo
         $product = new Product();
         // Guardar en la base de datos
