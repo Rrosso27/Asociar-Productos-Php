@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 require_once __DIR__ . '/../app/controllers/ProductController.php';
 require_once __DIR__ . '/../app/controllers/GroupController.php';
-
+require_once __DIR__ . '/../app/controllers/ProductGroupController.php';
 $controller = null;
 $response = ['status' => 'error', 'message' => 'Acción no válida'];
 
@@ -23,6 +23,14 @@ if (isset($_GET['action'])) {
                 $response = ['status' => 'error', 'message' => 'Método no permitido'];
             }
             break;
+        case 'deleteProduct':
+            if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                $controller = new ProductController();
+                $response = $controller->destroy($_GET['id']);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
 
         case 'getGroups':
             $controller = new GroupController();
@@ -32,11 +40,34 @@ if (isset($_GET['action'])) {
         case 'addGroup':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controller = new GroupController();
-                $response = $controller->addGroup();
+                $response = $controller->addGroup($_POST);
             } else {
                 $response = ['status' => 'error', 'message' => 'Método no permitido'];
             }
             break;
+        case 'deleteGroup':
+            if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                $controller = new GroupController();
+                $response = $controller->destroy($_GET['id']);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
+
+        case 'asignGroup':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller = new ProductGroupController();
+                $response = $controller->assign($_POST);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
+
+        case 'getAsignGroupById':
+            $controller = new ProductGroupController();
+            $response = $controller->getGroupsByProduct($_GET['id']);
+            break;
+
 
         default:
             $response = ['status' => 'error', 'message' => 'Ruta no encontrada'];

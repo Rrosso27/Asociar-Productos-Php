@@ -50,12 +50,65 @@ $(document).ready(function() {
         url: 'public/index.php?controller=dashboard&action=stats',
         method: 'GET',
         success: function(response) {
-            $('#totalProductos').text(response.totalProductos);
-            $('#totalGrupos').text(response.totalGrupos);
             $('#totalAsignaciones').text(response.totalAsignaciones);
         }
     });
 });
+
+
+$(document).ready(function() {
+    loadProducts();
+    function loadProducts() {
+        $.ajax({
+            url: 'app/api.php?action=getProducts', // Corregido para apuntar a api.php
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#totalProductos').text(response.length);
+
+            },
+            error: function() {
+                alert("Error al cargar los productos.");
+            }
+        });
+    }
+});
+
+$(document).ready(function() {
+    loadProducts();
+    function loadProducts() {
+        $.ajax({
+            url: 'app/api.php?action=getGroups', // Corregido para apuntar a api.php
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#totalGrupos').text(response.length );
+            },
+            error: function() {
+                alert("Error al cargar los grupos.");
+            }
+        });
+    }
+});
+
+$(document).ready(function() {
+    loadProducts();
+    function loadProducts() {
+        $.ajax({
+            url: 'app/api.php?action=getAsignGroup', // Corregido para apuntar a api.php
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#totalAsignaciones').text(response.totalAsignaciones);
+
+            },
+            error: function() {
+                alert("Error al cargar los grupos.");
+            }
+        });
+    }
+});
+</script>
 </script>
 
 <?php include 'layout/footer.php'; ?>

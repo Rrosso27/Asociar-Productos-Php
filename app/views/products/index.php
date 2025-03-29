@@ -25,18 +25,18 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
 </div>
 
 <script>
-$(document).ready(function() {
-    loadProducts();
+    $(document).ready(function () {
+        loadProducts();
 
-    function loadProducts() {
-        $.ajax({
-            url: 'app/api.php?action=getProducts', // Corregido para apuntar a api.php
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                let rows = '';
-                response.forEach(product => {
-                    rows += `
+        function loadProducts() {
+            $.ajax({
+                url: 'app/api.php?action=getProducts', // Corregido para apuntar a api.php
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    let rows = '';
+                    response.forEach(product => {
+                        rows += `
                         <tr>
                             <td>${product.id}</td>
                             <td>${product.nombre}</td>
@@ -44,17 +44,34 @@ $(document).ready(function() {
                             <td>${product.stock}</td>
                             <td>
                                 <button class="btn btn-warning btn-sm edit-product" data-id="${product.id}">Editar</button>
-                                <button class="btn btn-danger btn-sm delete-product" data-id="${product.id}">Eliminar</button>
+                                <button class="btn btn-danger btn-sm delete-product" onclick="deleteProduct(${product.id})" >Eliminar</button>
                             </td>
                         </tr>
                     `;
+                    });
+                    $('#productTable').html(rows);
+                },
+                error: function () {
+                    alert("Error al cargar los productos.");
+                }
+            });
+        }
+
+        window.deleteProduct = function (id) {
+            if (confirm('¿Estás seguro de eliminar este producto?')) {
+                $.ajax({
+                    url: 'app/api.php?action=deleteProduct&id=' + id,
+                    method: 'DELETE',
+                    success: function () {
+                        alert('producto eliminado');
+                        loadProducts();
+                    }
                 });
-                $('#productTable').html(rows);
-            },
-            error: function() {
-                alert("Error al cargar los productos.");
             }
-        });
-    }
-});
+        };
+
+    });
+
+
+
 </script>

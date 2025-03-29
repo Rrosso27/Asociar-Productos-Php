@@ -10,7 +10,6 @@ function runMigrations($conn) {
         if (class_exists($className)) {
             $migration = new $className();
             $migration->up($conn);
-            echo "Ejecutada: $className\n";
         }
     }
 }

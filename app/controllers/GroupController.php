@@ -2,19 +2,23 @@
 require_once __DIR__ . '/../models/Group.php';
 require_once 'Controller.php';
 
-class GroupController extends Controller {
+class GroupController extends Controller
+{
     private $groupModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->groupModel = new Group();
     }
 
-    public function index() {
+    public function index()
+    {
         $groups = $this->groupModel->getAll();
         $this->response($groups);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $group = $this->groupModel->getById($id);
         if ($group) {
             $this->response($group);
@@ -23,16 +27,18 @@ class GroupController extends Controller {
         }
     }
 
-    public function addGroup() {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if ($this->groupModel->create($data)) {
-            $this->response(['message' => 'Grupo creado exitosamente']);
+    public function addGroup($data)
+    {
+        $result = $this->groupModel->create(data: $data);
+        if ($result) {
+            return json_encode(['status' => 'success', 'message' => 'Grupo agregado correctamente']);
         } else {
-            $this->response(['error' => 'Error al crear grupo'], 500);
+            return json_encode(['status' => 'error', 'message' => 'Error al guardar el Grupo']);
         }
     }
 
-    public function update($id) {
+    public function update($id, $data)
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         if ($this->groupModel->update($id, $data)) {
             $this->response(['message' => 'Grupo actualizado correctamente']);
@@ -41,7 +47,8 @@ class GroupController extends Controller {
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         if ($this->groupModel->delete($id)) {
             $this->response(['message' => 'Grupo eliminado']);
         } else {
