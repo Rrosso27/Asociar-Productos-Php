@@ -13,11 +13,11 @@ class Group extends Model {
         ]);
     }
 
-    public function update($id, $data) {
+    public function update( $data) {
         $sql = "UPDATE {$this->table} SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            ':id' => $id,
+            ':id' => $data['id'],
             ':nombre' => $data['nombre'],
             ':descripcion' => $data['descripcion']
         ]);

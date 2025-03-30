@@ -5,7 +5,7 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
 
 <div class="container mt-4">
     <h2>Asignar Productos a Grupos</h2>
-
+    <div id="alert"></div>
     <div class="row">
         <!-- Selección de Grupo -->
         <div class="col-md-6">
@@ -125,8 +125,13 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ grupo_id: grupoId, producto_id: productoId }),
-                success: function () {
-                    alert("Producto asignado correctamente.");
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#alert').html(`<div class="alert alert-success">${response.message}</div>`);
+                        cargarProductosAsignados(grupoId);
+                    }else {
+                        $('#alert').html(`<div class="alert alert-danger">${response.message}</div>`);
+                    }
                     cargarProductosAsignados(grupoId);
                 }
             });

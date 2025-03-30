@@ -6,13 +6,13 @@ class ProductValidations
     /**
      * validar nombre
      * @param mixed $name
-     * @return bool|string|string[]
+     * @return bool|string
      */
     public function validateProductName($name)
     {
         $name = trim($name);
         if (empty($name)) {
-            return ["Product name cannot be empty."];
+            return "Product name cannot be empty.";
         }
         if (strlen($name) < 3) {
             return "Product name must be at least 3 characters long.";
@@ -26,7 +26,7 @@ class ProductValidations
     /**
      * validar precio
      * @param mixed $price
-     * @return bool|string|string[]
+     * @return bool|string
      */
     public function validateProductPrice($price)
     {
@@ -42,13 +42,13 @@ class ProductValidations
     /**
      * Validar Descripción
      * @param mixed $description
-     * @return bool|string|string[]
+     * @return bool|string
      */
     public function validateProductDescription($description)
     {
         $name = trim($description);
         if (empty($name)) {
-            return ["Product description cannot be empty."];
+            return "Product description cannot be empty.";
         }
         if (strlen($name) < 3) {
             return "Product description must be at least 3 characters long.";
@@ -61,7 +61,7 @@ class ProductValidations
     /**
      * Validar Stock
      * @param mixed $stock
-     * @return bool|string|string[]
+     * @return bool|string
      */
     public function validateProductCStock($stock)
     {

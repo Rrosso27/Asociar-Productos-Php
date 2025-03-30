@@ -30,6 +30,18 @@ class ProductGroup extends Model
         ]);
     }
 
+    function validateExistence($productId, $groupId)
+    {
+
+        $sql = "SELECT 1 FROM {$this->table} WHERE producto_id = :producto_id AND grupo_id = :grupo_id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':producto_id', $productId, PDO::PARAM_INT);
+        $stmt->bindParam(':grupo_id', $groupId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false; // Retorna true si ya existe
+    }
+
     // Obtener los grupos a los que pertenece un producto
     public function getGroupsByProduct($id)
     {

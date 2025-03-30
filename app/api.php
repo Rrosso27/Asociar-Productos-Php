@@ -14,11 +14,19 @@ if (isset($_GET['action'])) {
             $controller = new ProductController();
             $response = $controller->index();
             break;
-
+        
         case 'addProduct':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controller = new ProductController();
                 $response = $controller->addProduct($_POST);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
+        case 'updateProduct':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller = new ProductController();
+                $response = $controller->update($_POST);
             } else {
                 $response = ['status' => 'error', 'message' => 'Método no permitido'];
             }
@@ -41,6 +49,14 @@ if (isset($_GET['action'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controller = new GroupController();
                 $response = $controller->addGroup($_POST);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
+        case 'updateGroup':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller = new GroupController();
+                $response = $controller->update($_POST);
             } else {
                 $response = ['status' => 'error', 'message' => 'Método no permitido'];
             }

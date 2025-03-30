@@ -3,9 +3,10 @@ require_once BASE_PATH . "app/views/layout/header.php";
 require_once BASE_PATH . "app/views/layout/navbar.php";
 ?>
 <div class="container mt-4">
-    <div id="error-message"></div>
 
     <h2 id="formTitle">Agregar Grupo</h2>
+    <div id="error-message"></div>
+
     <form id="groupForm">
         <input type="hidden" id="groupId">
         <div class="mb-3">
@@ -40,7 +41,7 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
                 success: function (response) {
                     data = JSON.parse(response);
                     if (data.status === "success") {
-                        window.location.href = 'index.php?view=groups';
+                        window.location.href = 'index.php?view=products';
                     } else {
                         $('#error-message').html('<div class="alert alert-danger">' + data.message + '</div>');
 

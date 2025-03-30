@@ -1,11 +1,13 @@
 <?php
 require_once 'Model.php';
 
-class Product extends Model {
+class Product extends Model
+{
     protected $table = 'productos';
 
     // Insertar un nuevo producto
-    public function create($data) {
+    public function create($data)
+    {
         $sql = "INSERT INTO {$this->table} (nombre, descripcion, precio, stock, fecha_creacion) 
                 VALUES (:nombre, :descripcion, :precio, :stock, NOW())";
         $stmt = $this->conn->prepare($sql);
@@ -18,12 +20,13 @@ class Product extends Model {
     }
 
     // Actualizar un producto
-    public function update($id, $data) {
+    public function update($data)
+    {
         $sql = "UPDATE {$this->table} SET nombre = :nombre, descripcion = :descripcion, 
                 precio = :precio, stock = :stock WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            ':id' => $id,
+            ':id' => $data['id'],
             ':nombre' => $data['nombre'],
             ':descripcion' => $data['descripcion'],
             ':precio' => $data['precio'],

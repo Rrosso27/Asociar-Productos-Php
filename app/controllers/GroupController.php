@@ -42,13 +42,16 @@ class GroupController extends Controller
         }
     }
 
-    public function update($id, $data)
+    public function update($data)
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if ($this->groupModel->update($id, $data)) {
-            $this->response(['message' => 'Grupo actualizado correctamente']);
+        $validation = $this->validateGroup($data);
+        if ($validation !== true) {
+            return $validation;
+        }
+        if ($this->groupModel->update($data)) {
+            $this->response(['status' => 'success', 'message' => 'Grupo actualizado correctamente']);
         } else {
-            $this->response(['error' => 'Error al actualizar grupo'], 500);
+            $this->response(['status' => 'error', 'message' => 'Error al actualizar grupo'], 500);
         }
     }
 

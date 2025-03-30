@@ -64,7 +64,7 @@ class ProductController extends Controller
      * @param int $id
      * @return string
      */
-    public function update($id, $data)
+    public function update($data)
     {
 
         $validateProduc = $this->validateProduc($data);
@@ -72,10 +72,10 @@ class ProductController extends Controller
             return $validateProduc;
         }
 
-        if ($this->productModel->update($id, $data)) {
-            $this->response(['message' => 'Producto actualizado correctamente']);
+        if ($this->productModel->update($data)) {
+            $this->response(['status' => 'success', 'message' => 'Producto actualizado correctamente']);
         } else {
-            $this->response(['error' => 'Error al actualizar producto'], 500);
+            $this->response(['status' => 'error', 'message' => 'Error al actualizar producto'], 500);
         }
     }
 
