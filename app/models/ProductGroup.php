@@ -30,8 +30,6 @@ class ProductGroup extends Model
         ]);
     }
 
-
-
     // Obtener los grupos a los que pertenece un producto
     public function getGroupsByProduct($id)
     {

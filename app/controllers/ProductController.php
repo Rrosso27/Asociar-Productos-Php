@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/Product.php';
 require_once 'Controller.php';
-
+require_once __DIR__ . '/../validations/ProductValidations.php';
 class ProductController extends Controller
 {
     private $productModel;
@@ -11,14 +11,21 @@ class ProductController extends Controller
         $this->productModel = new Product();
     }
 
-    // Obtener todos los productos
+    /**
+     * Obtener todos los productos
+     * @return void
+     */
     public function index()
     {
         $products = $this->productModel->getAll();
         $this->response($products);
     }
 
-    // Obtener un producto por ID
+    /**
+     * Obtener un producto por ID
+     * @param int $id
+     * @return void
+     */
     public function getProducts($id)
     {
         $product = $this->productModel->getById($id);
@@ -29,9 +36,18 @@ class ProductController extends Controller
         }
     }
 
-    // Crear un nuevo producto
+    /**
+     * Obtener productos por grupo
+     * @param int $id
+     * @return string
+     */
     public function addProduct($data)
     {
+
+        $validateProduc = $this->validateProduc($data);
+        if ($validateProduc !== true) {
+            return $validateProduc;
+        }
 
         $product = new Product();
         $result = $product->create(data: $data);
@@ -43,10 +59,19 @@ class ProductController extends Controller
         }
     }
 
-    // Actualizar un producto
-    public function update($id)
+    /**
+     * Actualizar un producto (update)
+     * @param int $id
+     * @return string
+     */
+    public function update($id, $data)
     {
-        $data = json_decode(file_get_contents("php://input"), true);
+
+        $validateProduc = $this->validateProduc($data);
+        if ($validateProduc !== true) {
+            return $validateProduc;
+        }
+
         if ($this->productModel->update($id, $data)) {
             $this->response(['message' => 'Producto actualizado correctamente']);
         } else {
@@ -54,7 +79,11 @@ class ProductController extends Controller
         }
     }
 
-    // Eliminar un producto
+    /**
+     * Eliminar un producto (delete)
+     * @param int $id
+     * @return string
+     */
     public function destroy($id)
     {
         if ($this->productModel->delete($id)) {
@@ -62,5 +91,34 @@ class ProductController extends Controller
         } else {
             $this->response(['error' => 'Error al eliminar producto'], 500);
         }
+    }
+
+    /**
+     * Validar datos del producto
+     * @param array $data
+     * @return bool|string
+     */
+    public function validateProduc($data)
+    {
+        $ProductValidations = new ProductValidations();
+
+        $validateProductName = $ProductValidations->validateProductName($data['nombre']);
+        if ($validateProductName !== true) {
+            return json_encode(['status' => 'error', 'message' => $validateProductName]);
+        }
+        $validateProductPrice = $ProductValidations->validateProductPrice($data['precio']);
+        if ($validateProductPrice !== true) {
+            return json_encode(['status' => 'error', 'message' => $validateProductPrice]);
+        }
+        $validateProductDescription = $ProductValidations->validateProductDescription($data['descripcion']);
+        if ($validateProductDescription !== true) {
+            return json_encode(['status' => 'error', 'message' => $validateProductDescription]);
+        }
+        $validateProductStock = $ProductValidations->validateProductCStock($data['stock']);
+        if ($validateProductStock !== true) {
+            return json_encode(['status' => 'error', 'message' => $validateProductStock]);
+        }
+
+        return true;
     }
 }

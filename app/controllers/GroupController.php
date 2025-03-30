@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/Group.php';
 require_once 'Controller.php';
-
+require_once __DIR__ . '/../validations/GroupValidations.php';
 class GroupController extends Controller
 {
     private $groupModel;
@@ -29,6 +29,11 @@ class GroupController extends Controller
 
     public function addGroup($data)
     {
+
+        $validation = $this->validateGroup($data);
+        if ($validation !== true) {
+            return $validation;
+        }
         $result = $this->groupModel->create(data: $data);
         if ($result) {
             return json_encode(['status' => 'success', 'message' => 'Grupo agregado correctamente']);
@@ -54,5 +59,21 @@ class GroupController extends Controller
         } else {
             $this->response(['error' => 'Error al eliminar grupo'], 500);
         }
+    }
+
+    public function validateGroup($data)
+    {
+        $validations = new GroupValidations();
+        $nameValidation = $validations->validateGroupName($data['nombre']);
+        if ($nameValidation !== true) {
+            return json_encode(['status' => 'error', 'message' => $nameValidation]);
+
+        }
+        $descriptionValidation = $validations->validateGroupDescription($data['descripcion']);
+        if ($descriptionValidation !== true) {
+            return json_encode(['status' => 'error', 'message' => $descriptionValidation]);
+
+        }
+        return true;
     }
 }

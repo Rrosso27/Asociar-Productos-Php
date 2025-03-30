@@ -3,6 +3,8 @@ require_once BASE_PATH . "app/views/layout/header.php";
 require_once BASE_PATH . "app/views/layout/navbar.php";
 ?>
 <div class="container mt-4">
+    <div id="error-message"></div>
+
     <h2 id="formTitle">Agregar Grupo</h2>
     <form id="groupForm">
         <input type="hidden" id="groupId">
@@ -40,7 +42,13 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
                     if (data.status === "success") {
                         window.location.href = 'index.php?view=groups';
                     } else {
-                        alert('Error al guardar el producto: ' + data.message);
+                        $('#error-message').html('<div class="alert alert-danger">' + data.message + '</div>');
+
+                        setTimeout(function () {
+                            $('#error-message').fadeOut('slow', function () {
+                                $(this).html('').show();
+                            });
+                        }, 5000);
                     }
                 },
                 error: function (xhr, status, error) {

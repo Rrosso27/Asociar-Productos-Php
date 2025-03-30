@@ -5,6 +5,7 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
 ?>
 
 <div class="container mt-4">
+    <div id="error-message"></div>
     <h2 id="formTitle">Agregar Producto</h2>
     <form id="productForm">
         <input type="hidden" id="productId">
@@ -40,15 +41,21 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
                 url: "app/api.php?action=addProduct",
                 type: "POST",
                 data: formData,
-                processData: false, // Importante para enviar FormData
-                contentType: false, // Importante para enviar archivos o datos binarios
-                dataType: "json", // Indicar que esperamos un JSON
+                processData: false,
+                contentType: false,
+                dataType: "json",
                 success: function (response) {
                     data = JSON.parse(response);
                     if (data.status === "success") {
                         window.location.href = 'index.php?view=products';
                     } else {
-                        alert('Error al guardar el producto: ' + data.message);
+                        $('#error-message').html('<div class="alert alert-danger">' + data.message + '</div>');
+
+                        setTimeout(function () {
+                            $('#error-message').fadeOut('slow', function () {
+                                $(this).html('').show();
+                            });
+                        }, 5000);
                     }
                 },
                 error: function (xhr, status, error) {
