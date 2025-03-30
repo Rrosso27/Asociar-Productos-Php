@@ -24,11 +24,11 @@
                 <div class="card-body">
                     <h5 class="card-title" id="totalGrupos">0</h5>
                     <p class="card-text">Grupos disponibles para asignaciones.</p>
-                    <a  href="index.php?view=groups" class="btn btn-light">Ver Grupos</a>
+                    <a href="index.php?view=groups" class="btn btn-light">Ver Grupos</a>
                 </div>
             </div>
         </div>
-        
+
         <!-- Resumen de Asignaciones -->
         <div class="col-md-4">
             <div class="card text-white bg-warning mb-3">
@@ -44,71 +44,71 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    // Cargar estadísticas generales con AJAX
-    $.ajax({
-        url: 'public/index.php?controller=dashboard&action=stats',
-        method: 'GET',
-        success: function(response) {
-            $('#totalAsignaciones').text(response.totalAsignaciones);
+    $(document).ready(function () {
+        // Cargar estadísticas generales con AJAX
+        $.ajax({
+            url: 'public/index.php?controller=dashboard&action=stats',
+            method: 'GET',
+            success: function (response) {
+                $('#totalAsignaciones').text(response.totalAsignaciones);
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        loadProducts();
+        loadgetGroups();
+        getAsignGroupByall();
+
+        function loadProducts() {
+            $.ajax({
+                url: 'app/api.php?action=getProducts',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#totalProductos').text(response.length);
+
+                },
+                error: function () {
+                    alert("Error al cargar los productos.");
+                }
+            });
+        }
+
+        function loadgetGroups() {
+            $.ajax({
+                url: 'app/api.php?action=getGroups',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#totalGrupos').text(response.length);
+                },
+                error: function () {
+                    alert("Error al cargar los grupos.");
+                }
+            });
+        }
+
+
+        function getAsignGroupByall() {
+            $.ajax({
+                url: 'app/api.php?action=getAsignGroupCount',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#totalAsignaciones').text(response.totalAsignaciones);
+
+                },
+                error: function () {
+                    alert("Error al cargar los grupos.");
+                }
+            });
         }
     });
-});
 
 
-$(document).ready(function() {
-    loadProducts();
-    function loadProducts() {
-        $.ajax({
-            url: 'app/api.php?action=getProducts', // Corregido para apuntar a api.php
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                $('#totalProductos').text(response.length);
 
-            },
-            error: function() {
-                alert("Error al cargar los productos.");
-            }
-        });
-    }
-});
-
-$(document).ready(function() {
-    loadProducts();
-    function loadProducts() {
-        $.ajax({
-            url: 'app/api.php?action=getGroups', // Corregido para apuntar a api.php
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                $('#totalGrupos').text(response.length );
-            },
-            error: function() {
-                alert("Error al cargar los grupos.");
-            }
-        });
-    }
-});
-
-$(document).ready(function() {
-    loadProducts();
-    function loadProducts() {
-        $.ajax({
-            url: 'app/api.php?action=getAsignGroup', // Corregido para apuntar a api.php
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                $('#totalAsignaciones').text(response.totalAsignaciones);
-
-            },
-            error: function() {
-                alert("Error al cargar los grupos.");
-            }
-        });
-    }
-});
-</script>
 </script>
 
 <?php include 'layout/footer.php'; ?>

@@ -98,9 +98,9 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
                         response.forEach(producto => {
                             $('#asignacionesTable').append(`
                         <tr>
-                            <td>${producto.id}</td>
+                            <td>${producto.producto_id}</td>
                             <td>${producto.nombre}</td>
-                            <td><button class="btn btn-danger" onclick="removerAsignacion(${producto.id}, ${grupoId})">Remover</button></td>
+                            <td><button class="btn btn-danger" onclick="removerAsignacion(${producto.producto_id}, ${grupoId})">Remover</button></td>
                         </tr>
                     `);
                         });
@@ -135,8 +135,8 @@ require_once BASE_PATH . "app/views/layout/navbar.php";
         window.removerAsignacion = function (productoId, grupoId) {
             if (confirm("¿Estás seguro de remover este producto del grupo?")) {
                 $.ajax({
-                    url: '../../public/index.php?controller=productGroup&action=remove',
-                    method: 'DELETE',
+                    url: 'app/api.php?action=removeAsignGroup',
+                    method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ grupo_id: grupoId, producto_id: productoId }),
                     success: function () {

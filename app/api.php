@@ -62,10 +62,22 @@ if (isset($_GET['action'])) {
                 $response = ['status' => 'error', 'message' => 'Método no permitido'];
             }
             break;
-
         case 'getAsignGroupById':
             $controller = new ProductGroupController();
-            $response = $controller->getGroupsByProduct($_GET['id']);
+            $response = $controller->getGroupsByProduct($_GET['grupoId']);
+            break;
+        case 'removeAsignGroup':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller = new ProductGroupController();
+                $response = $controller->remove($_POST);
+            } else {
+                $response = ['status' => 'error', 'message' => 'Método no permitido'];
+            }
+            break;
+
+        case 'getAsignGroupCount':
+            $controller = new ProductGroupController();
+            $response = $controller->index();
             break;
 
 

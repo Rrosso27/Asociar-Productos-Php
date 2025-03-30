@@ -6,6 +6,8 @@ class ProductGroup extends Model
 {
     protected $table = 'producto_grupo';
 
+
+
     // Asignar un producto a un grupo
     public function assignProductToGroup($productId, $groupId)
     {
@@ -33,10 +35,10 @@ class ProductGroup extends Model
     // Obtener los grupos a los que pertenece un producto
     public function getGroupsByProduct($id)
     {
-        $p = "1";
-        $sql = "SELECT pg.* , gp.nombre FROM `producto_grupo` as pg INNER JOIN grupos gp ON pg.grupo_id = gp.id WHERE pg.grupo_id = :grupo_id ";
+        $data = $id;
+        $sql = "SELECT pg.*, ps.nombre FROM producto_grupo as pg INNER JOIN grupos gp ON pg.grupo_id = gp.id INNER JOIN productos ps ON pg.producto_id = ps.id WHERE pg.grupo_id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':grupo_id ', $p, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }

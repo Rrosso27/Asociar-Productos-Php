@@ -33,7 +33,7 @@ class ProductGroupController extends Controller
         }
     }
 
-    public function remove()
+    public function remove($data)
     {
         $data = json_decode(file_get_contents("php://input"), true);
         if ($this->productGroupModel->removeProductFromGroup($data['producto_id'], $data['grupo_id'])) {
@@ -42,4 +42,6 @@ class ProductGroupController extends Controller
             $this->response(['error' => 'Error al eliminar producto del grupo'], 500);
         }
     }
+
+   
 }
