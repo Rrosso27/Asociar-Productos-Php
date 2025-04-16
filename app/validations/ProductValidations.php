@@ -1,28 +1,42 @@
 <?php
 
+require_once __DIR__ . '/../messages/MessageHandler.php';
+
 class ProductValidations
 {
-
     /**
-     * validar nombre
+     * verificar si el producto existe por nombre
+     * @param mixed $name
+     * @return bool|string
+     */
+    public function productsExistName($name)
+    {
+        $Product = new Product();
+        $result = $Product->productsExistName($name);
+        if ($result) {
+            return "el producto ya existe.";
+        }
+        return true;
+    }
+    /**
+     * verificar si el producto existe por nombre
      * @param mixed $name
      * @return bool|string
      */
     public function validateProductName($name)
-    {
-        $name = trim($name);
+        {
+            $name = trim($name);
         if (empty($name)) {
-            return "Product name cannot be empty.";
+            return MessageHandler::get('Form_name_required');
         }
         if (strlen($name) < 3) {
-            return "Product name must be at least 3 characters long.";
+            return MessageHandler::get('Form_name_min_length');
         }
         if (!preg_match('/^[a-zA-Z0-9\s]+$/', $name)) {
-            return "Product name can only contain letters, numbers, and spaces.";
+            return MessageHandler::get('Form_name_invalid');
         }
         return true;
     }
-
     /**
      * validar precio
      * @param mixed $price
@@ -32,10 +46,10 @@ class ProductValidations
     {
         $price = trim($price);
         if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
-            return "Product price must be a valid number.";
+            return MessageHandler::get('Product_price_invalid');
         }
         if ($price <= 0) {
-            return "Product price must be greater than zero.";
+            return MessageHandler::get('Product_price_required');
         }
         return true;
     }
@@ -46,15 +60,15 @@ class ProductValidations
      */
     public function validateProductDescription($description)
     {
-        $name = trim($description);
-        if (empty($name)) {
-            return "Product description cannot be empty.";
+        $description = trim($description);
+        if (empty($description)) {
+            return MessageHandler::get('Form_description_required');
         }
-        if (strlen($name) < 3) {
-            return "Product description must be at least 3 characters long.";
+        if (strlen($description) < 3) {
+            return MessageHandler::get('Form_description_min_length');
         }
         if (!preg_match('/^[a-zA-Z0-9\s]+$/', $description)) {
-            return "Product description can only contain letters, numbers, and spaces.";
+            return MessageHandler::get('Form_description_invalid');
         }
         return true;
     }
@@ -65,12 +79,12 @@ class ProductValidations
      */
     public function validateProductCStock($stock)
     {
-        $price = trim($stock);
+        $stock = trim($stock);
         if (!filter_var($stock, FILTER_VALIDATE_FLOAT)) {
-            return "Product stock must be a valid number.";
+            return MessageHandler::get('Product_stock_invalid');
         }
         if ($stock <= 0) {
-            return "Product stock must be greater than zero.";
+            return MessageHandler::get('Product_stock');
         }
         return true;
     }

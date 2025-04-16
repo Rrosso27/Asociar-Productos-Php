@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Group.php';
+
 class ProductGroupValidations
 {
     /**

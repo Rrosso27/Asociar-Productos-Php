@@ -17,7 +17,6 @@ class GroupValidations
         }
         return true;
     }
-
     /**
      *  validar nombre
      * @param mixed $name

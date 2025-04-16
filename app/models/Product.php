@@ -4,7 +4,14 @@ require_once 'Model.php';
 class Product extends Model
 {
     protected $table = 'productos';
-
+    // verificar si el producto existe por nombre
+    public function productsExistName($nombre)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE nombre = :nombre";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':nombre' => $nombre]);
+        return $stmt->fetchColumn() > 0;
+    }
     // Insertar un nuevo producto
     public function create($data)
     {
@@ -18,7 +25,6 @@ class Product extends Model
             ':stock' => $data['stock']
         ]);
     }
-
     // Actualizar un producto
     public function update($data)
     {

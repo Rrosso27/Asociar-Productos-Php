@@ -10,7 +10,6 @@ class ProductController extends Controller
     {
         $this->productModel = new Product();
     }
-
     /**
      * Obtener todos los productos
      * @return void
@@ -20,7 +19,6 @@ class ProductController extends Controller
         $products = $this->productModel->getAll();
         $this->response($products);
     }
-
     /**
      * Obtener un producto por ID
      * @param int $id
@@ -35,7 +33,6 @@ class ProductController extends Controller
             $this->response(['error' => 'Producto no encontrado'], 404);
         }
     }
-
     /**
      * Obtener productos por grupo
      * @param int $id
@@ -78,7 +75,6 @@ class ProductController extends Controller
             $this->response(['status' => 'error', 'message' => 'Error al actualizar producto'], 500);
         }
     }
-
     /**
      * Eliminar un producto (delete)
      * @param int $id
@@ -92,7 +88,6 @@ class ProductController extends Controller
             $this->response(['error' => 'Error al eliminar producto'], 500);
         }
     }
-
     /**
      * Validar datos del producto
      * @param array $data
@@ -118,7 +113,10 @@ class ProductController extends Controller
         if ($validateProductStock !== true) {
             return json_encode(['status' => 'error', 'message' => $validateProductStock]);
         }
-
+        $productsExistName = $this->productModel->productsExistName($data['nombre']);
+        if ($productsExistName) {
+            return json_encode(['status' => 'error', 'message' => 'El producto ya existe.']);
+        }
         return true;
     }
 }
