@@ -1,7 +1,10 @@
 <?php
+require_once __DIR__ . '/../validations/GroupValidations.php';
+require_once __DIR__ . '/../messages/MessageHandler.php';
 require_once __DIR__ . '/../models/Group.php';
 require_once 'Controller.php';
-require_once __DIR__ . '/../validations/GroupValidations.php';
+
+
 class GroupController extends Controller
 {
     private $groupModel;
@@ -30,10 +33,10 @@ class GroupController extends Controller
         if ($group) {
             $this->response($group);
         } else {
-            $this->response(['error' => 'Grupo no encontrado'], 404);
+            $this->response(['error' => MessageHandler::get('product_no_found')], 404);
         }
     }
-    
+
     /**
      * Agregar un nuevo grupo
      * @param array $data
@@ -48,12 +51,12 @@ class GroupController extends Controller
         }
         $result = $this->groupModel->create($data);
         if ($result) {
-            return ['status' => 'success', 'message' => 'Grupo agregado correctamente'];
+            return ['status' => 'success', 'message' => MessageHandler::get('group_add_success')];
         } else {
-            return ['status' => 'error', 'message' => 'Error al guardar el Grupo'];
+            return ['status' => 'error', 'message' => MessageHandler::get('group_add_error')];
         }
     }
-    
+
     /**
      * Actualizar un grupo existente
      * @param array $data
@@ -67,9 +70,9 @@ class GroupController extends Controller
             return $validation;
         }
         if ($this->groupModel->update($data)) {
-            $this->response(['status' => 'success', 'message' => 'Grupo actualizado correctamente'], 200);
+            $this->response(['status' => 'success', 'message' => MessageHandler::get('group_upd_success') ], 200);
         } else {
-            $this->response(['status' => 'error', 'message' => 'Error al actualizar grupo'], 500);
+            $this->response(['status' => 'error', 'message' => MessageHandler::get('group_add_error')], 500);
         }
     }
     /**
@@ -80,12 +83,12 @@ class GroupController extends Controller
     public function destroy($id)
     {
         if ($this->groupModel->delete($id)) {
-            $this->response(['message' => 'Grupo eliminado']);
+            $this->response(['message' => MessageHandler::get('group_delete_success')], 200);
         } else {
-            $this->response(['error' => 'Error al eliminar grupo'], 500);
+            $this->response(['error' => MessageHandler::get('group_delete_error')], 500);
         }
     }
-    
+
     /**
      * Validar los datos del grupo
      * @param array $data

@@ -19,10 +19,21 @@ class MessageHandler
         "product_no_found" => "El producto no fue encontrado.",
         "product_exists_grup" => "El producto ya existe en el grupo.",
         "group_no_found"=> "El grupo no fue encontrado.",
+        "group_add_success" => "El grupo se ha añadido con éxito.",
+        "group_upd_success" => "El grupo se ha actualizado con éxito.",
+        "group_delete_success"=> "El grupo se ha eliminado con éxito.",
+        "group_delete_error"=> "Error al eliminar el grupo.",
+        "group_add_error"=> "Error al guardar el Grupo",
         "Group_id_required" => "El ID del grupo es requerido.",
         "Group_id_invalid" => "El ID del grupo no es válido.",
         "Product_id_required" => "El ID del producto es requerido.",
         "Product_id_invalid" => "El ID del producto no es válido.",
+        "Product_no_found"=> "El producto no fue encontrado.",
+        "Product_add_success" => "El producto se ha añadido con éxito.",
+        "Product_upd_success" => "El producto se ha actualizado con éxito.",
+        "Product_add_error"=> "Error al añadir el producto.",
+        "Product_delete_success"=> "El producto se ha eliminado con éxito.",
+        "Product_delete_error"=> "Error al eliminar el producto.",
     ];
 
     /**

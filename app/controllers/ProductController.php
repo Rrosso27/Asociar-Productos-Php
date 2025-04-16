@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__ . '/../validations/ProductValidations.php';
+require_once __DIR__ . '/../validations/GroupValidations.php';
 require_once __DIR__ . '/../models/Product.php';
 require_once 'Controller.php';
-require_once __DIR__ . '/../validations/ProductValidations.php';
+
 class ProductController extends Controller
 {
     private $productModel;
@@ -30,7 +32,7 @@ class ProductController extends Controller
         if ($product) {
             $this->response($product);
         } else {
-            $this->response(['error' => 'Producto no encontrado'], 404);
+            $this->response(['error' => MessageHandler::get('Product_no_found')], 404);
         }
     }
     /**
@@ -50,9 +52,9 @@ class ProductController extends Controller
         $result = $product->create(data: $data);
 
         if ($result) {
-            return json_encode(['status' => 'success', 'message' => 'Producto agregado correctamente'], 201);
+            return json_encode(['status' => 'success', 'message' => MessageHandler::get('Product_add_success')], 201);
         } else {
-            return json_encode(['status' => 'error', 'message' => 'Error al guardar el producto']);
+            return json_encode(['status' => 'error', 'message' => MessageHandler::get('Product_add_error')]);
         }
     }
 
@@ -70,9 +72,9 @@ class ProductController extends Controller
         }
 
         if ($this->productModel->update($data)) {
-            $this->response(['status' => 'success', 'message' => 'Producto actualizado correctamente'], 201);
+            $this->response(['status' => 'success', 'message' => MessageHandler::get('Product_upd_success')], 201);
         } else {
-            $this->response(['status' => 'error', 'message' => 'Error al actualizar producto'], 500);
+            $this->response(['status' => 'error', 'message' => MessageHandler::get('Product_add_error')], 500);
         }
     }
     /**
@@ -83,9 +85,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if ($this->productModel->delete($id)) {
-            $this->response(['message' => 'Producto eliminado'], 204);
+            $this->response(['message' => MessageHandler::get('Product_delete_success')], 204);
         } else {
-            $this->response(['error' => 'Error al eliminar producto'], 500);
+            $this->response(['error' => MessageHandler::get('Product_delete_error')], 500);
         }
     }
     /**
