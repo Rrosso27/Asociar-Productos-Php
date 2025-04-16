@@ -29,16 +29,15 @@ class GroupController extends Controller
 
     public function addGroup($data)
     {
-
         $validation = $this->validateGroup($data);
         if ($validation !== true) {
-            return $validation;
+            return ['status' => 'error', 'message' => $validation];
         }
-        $result = $this->groupModel->create(data: $data);
+        $result = $this->groupModel->create($data);
         if ($result) {
-            return json_encode(['status' => 'success', 'message' => 'Grupo agregado correctamente']);
+            return ['status' => 'success', 'message' => 'Grupo agregado correctamente'];
         } else {
-            return json_encode(['status' => 'error', 'message' => 'Error al guardar el Grupo']);
+            return ['status' => 'error', 'message' => 'Error al guardar el Grupo'];
         }
     }
 
@@ -49,7 +48,7 @@ class GroupController extends Controller
             return $validation;
         }
         if ($this->groupModel->update($data)) {
-            $this->response(['status' => 'success', 'message' => 'Grupo actualizado correctamente']);
+            $this->response(['status' => 'success', 'message' => 'Grupo actualizado correctamente'], 200);
         } else {
             $this->response(['status' => 'error', 'message' => 'Error al actualizar grupo'], 500);
         }

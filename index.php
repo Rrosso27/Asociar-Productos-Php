@@ -1,16 +1,15 @@
 <?php
-// Incluir configuración
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 require_once 'app/config/config.php';
 
-// Obtener la vista correspondiente desde `routes.php`
-$viewFile = require_once 'app/routes.php';
+$viewFile = require_once 'router/web.php';
 
-// Incluir encabezado
-require_once 'app/views/layout/header.php';
+require_once 'views/layout/header.php';
 
-// Incluir la vista seleccionada
 require_once $viewFile;
 
-// Incluir pie de página
-require_once 'app/views/layout/footer.php';
-
+require_once 'views/layout/footer.php';

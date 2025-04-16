@@ -53,7 +53,7 @@ class ProductController extends Controller
         $result = $product->create(data: $data);
 
         if ($result) {
-            return json_encode(['status' => 'success', 'message' => 'Producto agregado correctamente']);
+            return json_encode(['status' => 'success', 'message' => 'Producto agregado correctamente'], 201);
         } else {
             return json_encode(['status' => 'error', 'message' => 'Error al guardar el producto']);
         }
@@ -73,7 +73,7 @@ class ProductController extends Controller
         }
 
         if ($this->productModel->update($data)) {
-            $this->response(['status' => 'success', 'message' => 'Producto actualizado correctamente']);
+            $this->response(['status' => 'success', 'message' => 'Producto actualizado correctamente'], 201);
         } else {
             $this->response(['status' => 'error', 'message' => 'Error al actualizar producto'], 500);
         }
@@ -87,7 +87,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if ($this->productModel->delete($id)) {
-            $this->response(['message' => 'Producto eliminado']);
+            $this->response(['message' => 'Producto eliminado'], 204);
         } else {
             $this->response(['error' => 'Error al eliminar producto'], 500);
         }

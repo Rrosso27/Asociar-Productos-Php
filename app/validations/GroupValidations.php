@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../messages/MessageHandler.php';
 
 class GroupValidations
 {
@@ -11,13 +12,14 @@ class GroupValidations
     {
         $name = trim($name);
         if (empty($name)) {
-            return ["Group name cannot be empty."];
+            return MessageHandler::get('Form_name_required');
+
         }
         if (strlen($name) < 3) {
-            return "Group name must be at least 3 characters long.";
+            return MessageHandler::get('Form_name_min_length');
         }
         if (!preg_match('/^[a-zA-Z0-9\s]+$/', $name)) {
-            return "Group name can only contain letters, numbers, and spaces.";
+            return MessageHandler::get('Form_name_invalid');
         }
         return true;
     }
@@ -30,13 +32,13 @@ class GroupValidations
     {
         $name = trim($name);
         if (empty($name)) {
-            return ["Group name cannot be empty."];
+            return MessageHandler::get('Form_description_required');
         }
         if (strlen($name) < 3) {
-            return "Group name must be at least 3 characters long.";
+            return MessageHandler::get('Form_description_min_length');
         }
         if (!preg_match('/^[a-zA-Z0-9\s]+$/', $name)) {
-            return "Group name can only contain letters, numbers, and spaces.";
+            return MessageHandler::get('Form_description_invalid');
         }
         return true;
     }

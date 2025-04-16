@@ -1,10 +1,20 @@
 <?php
 require_once 'Model.php';
 
-class Group extends Model {
+class Group extends Model
+{
     protected $table = 'grupos';
 
-    public function create($data) {
+    public function productExistsByID($productId)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE producto_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $productId]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function create($data)
+    {
         $sql = "INSERT INTO {$this->table} (nombre, descripcion) VALUES (:nombre, :descripcion)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
@@ -13,7 +23,8 @@ class Group extends Model {
         ]);
     }
 
-    public function update( $data) {
+    public function update($data)
+    {
         $sql = "UPDATE {$this->table} SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([

@@ -1,7 +1,6 @@
 <?php
 define('BASE_PATH', dirname(__DIR__, 2) . '/');
-
-
+define('BASE_URL', '/Asociar-Productos-Php/');
 
 require_once 'env.php';
 

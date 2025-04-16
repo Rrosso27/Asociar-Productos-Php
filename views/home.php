@@ -44,16 +44,6 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        // Cargar estadísticas generales con AJAX
-        $.ajax({
-            url: 'public/index.php?controller=dashboard&action=stats',
-            method: 'GET',
-            success: function (response) {
-                $('#totalAsignaciones').text(response.totalAsignaciones);
-            }
-        });
-    });
 
 
     $(document).ready(function () {
@@ -63,7 +53,7 @@
 
         function loadProducts() {
             $.ajax({
-                url: 'app/api.php?action=getProducts',
+                url: 'router/api.php?action=getProducts',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
@@ -78,7 +68,7 @@
 
         function loadgetGroups() {
             $.ajax({
-                url: 'app/api.php?action=getGroups',
+                url: 'router/api.php?action=getGroups',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
@@ -89,15 +79,14 @@
                 }
             });
         }
-
-
         function getAsignGroupByall() {
             $.ajax({
-                url: 'app/api.php?action=getAsignGroupCount',
+                url: 'router/api.php?action=getAsignGroupCount',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    $('#totalAsignaciones').text(response.totalAsignaciones);
+                    console.log(response);
+                    $('#totalAsignaciones').text(response.length);
 
                 },
                 error: function () {

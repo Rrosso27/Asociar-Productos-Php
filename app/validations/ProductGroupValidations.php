@@ -18,6 +18,16 @@ class ProductGroupValidations
         }
         return true;
     }
+
+    public function productExistsByID($productId)
+    {
+        $group = new Group();
+        $result = $group->getById($productId);
+        if ($result) {
+            return "el producto con ID {$productId} ya existe en el grupo.";
+        }
+        return true;
+    }
     /**
      * Validar grupo id existe
      * @param mixed $groupId

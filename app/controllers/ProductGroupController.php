@@ -28,9 +28,7 @@ class ProductGroupController extends Controller
     {
 
         $data = json_decode(file_get_contents("php://input"), true);
-        // Validar que el producto y el grupo existen
-        
-      
+
         if ($this->productGroupModel->validateExistence($data['producto_id'], $data['grupo_id'])) {
             $this->response(['status' => 'error', 'message' => 'Este producto ya está asignado a este grupo']);
 
@@ -68,6 +66,10 @@ class ProductGroupController extends Controller
         $productExistsValidation = $productGroupValidations->productExists($data['producto_id']);
         if ($productExistsValidation !== true) {
             return $this->response(['error' => $productExistsValidation], 400);
+        }
+        $productExistsByID = $productGroupValidations->productExistsByID($data['producto_id']);
+        if ($productExistsByID !== true) {
+            return $this->response(['error' => $productExistsByID], 409);
         }
         $groupExistsValidation = $productGroupValidations->groupExists($data['grupo_id']);
         if ($groupExistsValidation !== true) {
