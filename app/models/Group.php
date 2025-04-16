@@ -13,6 +13,14 @@ class Group extends Model
         return $stmt->fetchColumn() > 0;
     }
 
+    public function groupExistsByName($name)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE nombre = :nombre";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':nombre' => $name]);
+        return $stmt->fetchColumn() > 0;
+    }
+
     public function create($data)
     {
         $sql = "INSERT INTO {$this->table} (nombre, descripcion) VALUES (:nombre, :descripcion)";

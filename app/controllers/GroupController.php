@@ -68,13 +68,17 @@ class GroupController extends Controller
         $validations = new GroupValidations();
         $nameValidation = $validations->validateGroupName($data['nombre']);
         if ($nameValidation !== true) {
-            return json_encode(['status' => 'error', 'message' => $nameValidation]);
+            return json_encode($nameValidation);
 
         }
         $descriptionValidation = $validations->validateGroupDescription($data['descripcion']);
         if ($descriptionValidation !== true) {
-            return json_encode(['status' => 'error', 'message' => $descriptionValidation]);
+            return json_encode($descriptionValidation);
 
+        }
+        $groupExistsByName = $validations->groupExistsByName($data['nombre']);
+        if ($groupExistsByName !== true) {
+            return json_encode($groupExistsByName);
         }
         return true;
     }

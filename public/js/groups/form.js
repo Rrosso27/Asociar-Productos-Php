@@ -11,9 +11,13 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
+                console.log(response);
+                
                 if (typeof response === 'string') {
                     response = JSON.parse(response);
                 }
+
+
                 if (response.status === "success") {
                     window.location.href = 'index.php?view=groups';
                 } else {

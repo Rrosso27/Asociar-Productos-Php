@@ -4,6 +4,21 @@ require_once __DIR__ . '/../messages/MessageHandler.php';
 class GroupValidations
 {
     /**
+     * grupo existe
+     * @param mixed $name
+     * @return bool|string
+     */
+    public function groupExistsByName($name)
+    {
+        $group = new Group();
+        $result = $group->groupExistsByName($name);
+        if ($result) {
+            return "el grupo ya existe.";
+        }
+        return true;
+    }
+
+    /**
      *  validar nombre
      * @param mixed $name
      * @return bool|string|string[]
