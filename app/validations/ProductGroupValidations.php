@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../messages/MessageHandler.php';
 require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../models/Group.php';
 
@@ -15,7 +15,7 @@ class ProductGroupValidations
         $product = new Product();
         $result = $product->getById($productId);
         if (!$result) {
-            return "Product with ID {$productId} does not exist.";
+            return MessageHandler::get('product_no_found');
         }
         return true;
     }
@@ -25,7 +25,7 @@ class ProductGroupValidations
         $group = new Group();
         $result = $group->getById($productId);
         if ($result) {
-            return "el producto con ID {$productId} ya existe en el grupo.";
+            return MessageHandler::get('product_exists_grup');
         }
         return true;
     }
@@ -39,7 +39,7 @@ class ProductGroupValidations
         $group = new Group();
         $result = $group->getById($groupId);
         if (!$result) {
-            return "Group with ID {$groupId} does not exist.";
+            return MessageHandler::get('group_no_found');
         }
         return true;
     }
@@ -52,14 +52,14 @@ class ProductGroupValidations
     {
         $groupId = trim($groupId);
         if (empty($groupId)) {
-            return "Group ID cannot be empty.";
+            return MessageHandler::get('Group_id_required');
         }
         if (!is_numeric($groupId)) {
-            return "Group ID must be a valid number.";
+            return MessageHandler::get('Group_id_invalid');
         }
 
         if (!filter_var($groupId, FILTER_VALIDATE_FLOAT)) {
-            return " groupId must be a valid number.";
+            return MessageHandler::get('Group_id_invalid');
         }
         return true;
     }
@@ -72,14 +72,14 @@ class ProductGroupValidations
     {
         $productId = trim($productId);
         if (empty($productId)) {
-            return "Product ID cannot be empty.";
+            return MessageHandler::get('Product_id_required');
         }
         if (!is_numeric($productId)) {
-            return "Product ID must be a valid number.";
+            return MessageHandler::get('Product_id_invalid');
         }
 
         if (!filter_var($productId, FILTER_VALIDATE_FLOAT)) {
-            return " productId must be a valid number.";
+            return MessageHandler::get('Product_id_invalid');
         }
         return true;
     }

@@ -5,9 +5,6 @@ require_once 'Model.php';
 class ProductGroup extends Model
 {
     protected $table = 'producto_grupo';
-
-
-
     // Asignar un producto a un grupo
     public function assignProductToGroup($productId, $groupId)
     {
@@ -29,7 +26,7 @@ class ProductGroup extends Model
             ':grupo_id' => $groupId
         ]);
     }
-
+     // Validar si un producto ya está asignado a un grupo
     function validateExistence($productId, $groupId)
     {
 

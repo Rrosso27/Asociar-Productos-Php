@@ -10,12 +10,20 @@ class ProductGroupController extends Controller
     {
         $this->productGroupModel = new ProductGroup();
     }
+    /**
+     * Obtener todos los grupos de productos
+     * @return void
+     */
     public function index()
     {
         $products = $this->productGroupModel->getAll();
         $this->response($products);
     }
-
+    /**
+     * Obtener un grupo de productos por ID
+     * @param int $id
+     * @return void
+     */
     public function getGroupsByProduct($id)
     {
 
@@ -23,7 +31,11 @@ class ProductGroupController extends Controller
         $this->response($products);
     }
 
-
+    /**
+     * Asignar un producto a un grupo
+     * @param array $data
+     * @return void
+     */
     public function assign($data)
     {
 
@@ -40,7 +52,11 @@ class ProductGroupController extends Controller
             $this->response(['status' => 'error', 'message' => 'Error al asignar producto'], 500);
         }
     }
-
+    /**
+     * Remover un producto de un grupo
+     * @param array $data
+     * @return void
+     */
     public function remove($data)
     {
         $data = json_decode(file_get_contents("php://input"), true);
@@ -51,7 +67,11 @@ class ProductGroupController extends Controller
         }
     }
 
-
+    /**
+     * Validar los datos del grupo de productos
+     * @param array $data
+     * @return void
+     */
     public function GroupValidations($data)
     {
         $productGroupValidations = new ProductGroupValidations();

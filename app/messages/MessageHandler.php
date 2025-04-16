@@ -16,10 +16,17 @@ class MessageHandler
         "Product_price_invalid" => "El precio no es válido.",
         "Product_stock" => "El stock es requerido.",
         "Product_stock_invalid" => "El stock no es válido.",
+        "product_no_found" => "El producto no fue encontrado.",
+        "product_exists_grup" => "El producto ya existe en el grupo.",
+        "group_no_found"=> "El grupo no fue encontrado.",
+        "Group_id_required" => "El ID del grupo es requerido.",
+        "Group_id_invalid" => "El ID del grupo no es válido.",
+        "Product_id_required" => "El ID del producto es requerido.",
+        "Product_id_invalid" => "El ID del producto no es válido.",
     ];
 
     /**
-     * Get a message by key.
+     * Recibir un mensaje por clave.
      *
      * @param string $key
      * @return string|null

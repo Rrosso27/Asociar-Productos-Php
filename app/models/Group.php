@@ -4,7 +4,7 @@ require_once 'Model.php';
 class Group extends Model
 {
     protected $table = 'grupos';
-
+    //verificar si el producto existe por id
     public function productExistsByID($productId)
     {
         $sql = "SELECT COUNT(*) FROM {$this->table} WHERE producto_id = :id";
@@ -12,7 +12,7 @@ class Group extends Model
         $stmt->execute([':id' => $productId]);
         return $stmt->fetchColumn() > 0;
     }
-
+    // verificar si el grupo existe por nombre
     public function groupExistsByName($name)
     {
         $sql = "SELECT COUNT(*) FROM {$this->table} WHERE nombre = :nombre";
@@ -20,7 +20,7 @@ class Group extends Model
         $stmt->execute([':nombre' => $name]);
         return $stmt->fetchColumn() > 0;
     }
-
+    // crear un nuevo grupo
     public function create($data)
     {
         $sql = "INSERT INTO {$this->table} (nombre, descripcion) VALUES (:nombre, :descripcion)";
@@ -30,7 +30,7 @@ class Group extends Model
             ':descripcion' => $data['descripcion']
         ]);
     }
-
+    // actualizar un grupo
     public function update($data)
     {
         $sql = "UPDATE {$this->table} SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";

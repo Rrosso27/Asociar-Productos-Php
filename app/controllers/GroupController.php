@@ -10,13 +10,20 @@ class GroupController extends Controller
     {
         $this->groupModel = new Group();
     }
-
+    /**
+     * Obtener todos los grupos
+     * @return void
+     */
     public function index()
     {
         $groups = $this->groupModel->getAll();
         $this->response($groups);
     }
-
+    /**
+     * Obtener un grupo por ID
+     * @param int $id
+     * @return void
+     */
     public function show($id)
     {
         $group = $this->groupModel->getById($id);
@@ -26,6 +33,12 @@ class GroupController extends Controller
             $this->response(['error' => 'Grupo no encontrado'], 404);
         }
     }
+    
+    /**
+     * Agregar un nuevo grupo
+     * @param array $data
+     * @return array
+     */
 
     public function addGroup($data)
     {
@@ -40,6 +53,12 @@ class GroupController extends Controller
             return ['status' => 'error', 'message' => 'Error al guardar el Grupo'];
         }
     }
+    
+    /**
+     * Actualizar un grupo existente
+     * @param array $data
+     * @return void
+     */
 
     public function update($data)
     {
@@ -53,7 +72,11 @@ class GroupController extends Controller
             $this->response(['status' => 'error', 'message' => 'Error al actualizar grupo'], 500);
         }
     }
-
+    /**
+     * Eliminar un grupo por ID
+     * @param int $id
+     * @return void
+     */
     public function destroy($id)
     {
         if ($this->groupModel->delete($id)) {
@@ -62,6 +85,12 @@ class GroupController extends Controller
             $this->response(['error' => 'Error al eliminar grupo'], 500);
         }
     }
+    
+    /**
+     * Validar los datos del grupo
+     * @param array $data
+     * @return mixed
+     */
 
     public function validateGroup($data)
     {
