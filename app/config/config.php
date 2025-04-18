@@ -4,10 +4,10 @@ define('BASE_URL', '/Asociar-Productos-Php/');
 
 require_once 'env.php';
 
-define('DB_HOST', getenv('DB_HOST'));
-define('DB_NAME', getenv('DB_NAME'));
-define('DB_USER', getenv('DB_USER'));
-define('DB_PASS', getenv('DB_PASS'));
+define('DB_HOST', 'db'); // Nombre del servicio definido en docker-compose.yml
+define('DB_NAME', 'asociar_productos');
+define('DB_USER', 'user');
+define('DB_PASSWORD', 'password');
 
 define('DEBUG_MODE', true); // Cambiar a false en producción
 
